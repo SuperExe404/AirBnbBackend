@@ -1,0 +1,12 @@
+# Ignorar el entorno virtual
+venv/
+
+# Ignorar migraciones de Django
+**/migrations/
+**/site-packages/
+
+# Ignorar archivos de caché
+__pycache__/
+
+# Archivos de entorno
+.env
