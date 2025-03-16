@@ -1,4 +1,4 @@
-version: '3.8'  # Puedes dejarlo, ya que es válido si estás usando Docker Compose v1.27.0 o superior
+version: '3.8'  # Compatible con Docker Compose v1.27.0 o superior
 
 services:
   web:
@@ -12,6 +12,7 @@ services:
       - .env.dev  
     depends_on:
       - db
+      
   db:
     image: postgres:15
     volumes:

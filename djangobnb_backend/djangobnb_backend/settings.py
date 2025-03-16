@@ -47,6 +47,8 @@ CORS_ALLOWED_ORIGINS = [
     'https://127.0.0.1:3000',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True 
+
 REST_AUTH = {
     "USE_JWT": True,
     "JWT_AUTH_HTTPONLY": False,
@@ -138,7 +140,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'  # Asegúrate de que la ruta sea correcta
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -1,8 +1,9 @@
-# djangobnb_backend/urls.py o el archivo principal de URLs
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('property.urls')),  # Aquí incluyes las URLs de la app 'property'
-]
+    path('api/properties/', include('property.urls')),  
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
