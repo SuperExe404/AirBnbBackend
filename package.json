@@ -1,5 +1,9 @@
 {
   "dependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "date-fns": "^4.1.0",
+    "react-date-range": "^2.0.1",
+    "react-select": "^5.10.1",
+    "world-countries": "^5.1.0"
   }
 }
