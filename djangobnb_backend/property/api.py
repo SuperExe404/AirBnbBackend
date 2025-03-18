@@ -17,3 +17,12 @@ from django.http import JsonResponse
      return JsonResponse({
          'data': serializer.data
      })
+
+
+ @api_view(['GET'])
+ @authentication_classes([])  # Aquí puedes agregar autenticación si es necesario
+ @permission_classes([])  # Aquí puedes agregar permisos si es necesario
+ def properties_list(request):
+     properties = Property.objects.all()  # Obtener todas las propiedades
+     serializer = PropertiesDetailSerializer(properties, many=True)  # Serializar múltiples propiedades
+     return JsonResponse({'data': serializer.data})
