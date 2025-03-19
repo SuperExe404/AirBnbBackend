@@ -3,17 +3,42 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from .forms import PropertyForm
 from .models import Property , Reservation
 from .serializers import PropertiesListSerializer, PropertiesDetailSerializer, ReservationsListSerializer
+from rest_framework_simplejwt.tokens import AccessToken
+from useraccount.models import User
  
 @api_view(['GET'])
 @authentication_classes([])  # Aquí puedes agregar autenticación si es necesario
 @permission_classes([])  # Aquí puedes agregar permisos si es necesario
 def properties_list(request):
+    try:
+        token = request.META['HTTP_AUTHORIZATION'].split('Bearer ')[1]
+        token = AccessToken(token)
+        user_id = token.payload['user_id']
+        user = User.objects.get(pk=user_id)
+    except Exception as e:
+        user = None
+ 
+ 
+    favorites = []
     properties = Property.objects.all()  # Obtener todas las propiedades
+    is_favorites = request.GET.get('is_favorites', '')
+
+    landlord_id = request.GET.get('landlord_id', '')
+    if is_favorites:
+         properties = properties.filter(favorited__in=[user])
+ 
+    if user:
+        for property in properties:
+            if user in property.favorited.all():
+                favorites.append(property.id)
+ 
+    if landlord_id:
+        properties = properties.filter(landlord_id = landlord_id)
     serializer = PropertiesListSerializer(properties, many=True)  # Serializar múltiples propiedades
  
     return JsonResponse({
-         'data': serializer.data
-    })
+        'data': serializer.data,
+        'favorites': favorites    })
 
 @api_view(['GET'])
 @authentication_classes([])
@@ -72,6 +97,19 @@ def book_property(request, pk):
  
          return JsonResponse({'success': True})
     except Exception as e:
-         print('Error', e)
+        print('Error', e)
  
-         return JsonResponse({'success': False})
+        return JsonResponse({'success': False})
+     
+@api_view(['POST'])
+def toggle_favorite(request, pk):
+    property = Property.objects.get(pk=pk)
+ 
+    if request.user in property.favorited.all():
+        property.favorited.remove(request.user)
+ 
+        return JsonResponse({'is_favorite': False})
+    else:
+        property.favorited.add(request.user)
+ 
+        return JsonResponse({'is_favorite': True})
