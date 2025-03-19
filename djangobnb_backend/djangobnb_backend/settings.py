@@ -17,6 +17,11 @@ environ.Env.read_env()
 
 SITE_ID = 1
 WEBSITE_URL = 'https://localhost:8000'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
@@ -72,6 +77,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'property',
     'chat',
+    'daphne',
 ]
 
 
@@ -105,6 +111,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'djangobnb_backend.wsgi.application'
+ASGI_APPLICATION = 'djangobnb_backend.asgi.application'
 
 DATABASES = {
     'default': {
