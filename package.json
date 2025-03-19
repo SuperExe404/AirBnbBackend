@@ -4,6 +4,7 @@
     "date-fns": "^4.1.0",
     "react-date-range": "^2.0.1",
     "react-select": "^5.10.1",
+    "react-use-websocket": "^4.13.0",
     "world-countries": "^5.1.0"
   }
 }
